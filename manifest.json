@@ -1,6 +1,6 @@
 {
-    "name": "My Music Player",
-    "short_name": "Music Player",
+    "name": "Salim's Music Player",
+    "short_name": "Salim's Player",
     "description": "A simple web-based music player.",
     "start_url": "./index.html",
     "display": "standalone",
