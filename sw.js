@@ -9,10 +9,10 @@ const urlsToCache = [
     '/app.js',
     '/manifest.json',
     // Add all your music files here:
-    '/music/06 - Nee Prashnalu - SenSongsMp3.co.mp3', // Placeholder: Replace with your actual file
-    '/music/Sooryudinye-SenSongsMp3.Co.mp3', // Placeholder: Replace with your actual file
-    '/music/Theme Music - SenSongsMp3.Co.mp3', // Placeholder: Replace with your actual file
-    '/music/mix_12m52s (audio-joiner.com).mp3', // Placeholder: Replace with your actual file
+    '/Music/06 - Nee Prashnalu - SenSongsMp3.co.mp3', // Placeholder: Replace with your actual file
+    '/Music/Sooryudinye-SenSongsMp3.Co.mp3', // Placeholder: Replace with your actual file
+    '/Music/Theme Music - SenSongsMp3.Co.mp3', // Placeholder: Replace with your actual file
+    '/Music/mix_12m52s (audio-joiner.com).mp3', // Placeholder: Replace with your actual file
     // Add placeholder images if you use them directly in HTML/CSS
     'https://placehold.co/192x192/4A5568/CBD5E0?text=No+Art',
     'https://placehold.co/192x192/4A5568/CBD5E0?text=Sunset',
