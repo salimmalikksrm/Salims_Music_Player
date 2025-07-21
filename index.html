@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salim's Music Player</title>
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Link to your custom stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Web App Manifest for PWA features -->
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="bg-gray-900 text-gray-100 font-inter min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="bg-gray-800 rounded-xl shadow-lg p-6 w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center mb-6 text-purple-400">Salim's Music Player</h1>
+
+        <!-- Album Art / Placeholder -->
+        <div class="w-48 h-48 mx-auto mb-6 bg-gray-700 rounded-lg flex items-center justify-center overflow-hidden shadow-md">
+            <img id="album-art" src="https://placehold.co/192x192/4A5568/CBD5E0?text=No+Art" alt="Album Art" class="w-full h-full object-cover rounded-lg">
+        </div>
+
+        <!-- Song Info -->
+        <div class="text-center mb-6">
+            <h2 id="song-title" class="text-xl font-semibold text-white truncate">No song playing</h2>
+            <p id="song-artist" class="text-gray-400 text-sm">Unknown Artist</p>
+        </div>
+
+        <!-- Audio Element (hidden, controlled by JS) -->
+        <audio id="audio-player" class="hidden"></audio>
+
+        <!-- Playback Controls -->
+        <div class="flex justify-center items-center space-x-4 mb-8">
+            <button id="rewind-10-btn" class="relative flex flex-col items-center p-3 rounded-full bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-75 transition duration-200 shadow-md">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M8.47 16.07a.75.75 0 01-1.06 0l-4.25-4.25a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L5.81 9.5H15a.75.75 0 010 1.5H5.81l2.66 2.66a.75.75 0 010 1.06z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs text-white mt-1">Rewind 10s</span>
+            </button>
+            <button id="prev-btn" class="relative flex flex-col items-center p-3 rounded-full bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-75 transition duration-200 shadow-md">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-3.5-7.5a.75.75 0 000 1.5h3.19l-.72.72a.75.75 0 001.06 1.06l2.25-2.25a.75.75 0 000-1.06l-2.25-2.25a.75.75 0 00-1.06 1.06l.72.72H6.5z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs text-white mt-1">Previous</span>
+            </button>
+            <button id="play-pause-btn" class="relative flex flex-col items-center p-4 rounded-full bg-purple-500 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75 transition duration-200 shadow-lg">
+                <svg id="play-icon" class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832L12.236 10l-2.681-2.832z" clip-rule="evenodd" />
+                </svg>
+                <svg id="pause-icon" class="w-8 h-8 text-white hidden" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs text-white mt-1">Play/Pause</span>
+            </button>
+            <button id="next-btn" class="relative flex flex-col items-center p-3 rounded-full bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-75 transition duration-200 shadow-md">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.5-7.5a.75.75 0 000 1.5h-3.19l.72.72a.75.75 0 00-1.06 1.06l-2.25-2.25a.75.75 0 000-1.06l2.25-2.25a.75.75 0 001.06 1.06l-.72.72h3.19z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs text-white mt-1">Next</span>
+            </button>
+            <button id="forward-10-btn" class="relative flex flex-col items-center p-3 rounded-full bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-75 transition duration-200 shadow-md">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M11.53 3.93a.75.75 0 010 1.06L14.19 8.5H5a.75.75 0 010 1.5h9.19l-2.66 2.66a.75.75 0 111.06 1.06l4.25-4.25a.75.75 0 010-1.06l-4.25-4.25a.75.75 0 01-1.06 0z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs text-white mt-1">Forward 10s</span>
+            </button>
+        </div>
+
+        <!-- Progress Bar and Time Display -->
+        <div class="w-full mb-6">
+            <div class="flex justify-between text-xs text-gray-400 mb-1">
+                <span id="current-time">0:00</span>
+                <span id="total-duration">0:00</span>
+            </div>
+            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                <div id="progress-bar" class="bg-purple-500 h-2.5 rounded-full" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- Volume Control -->
+        <div class="flex items-center justify-center space-x-3 mb-6">
+            <!-- Volume Mute Icon -->
+            <svg id="volume-mute-icon" class="w-5 h-5 text-gray-400 hidden" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19.5 12c0 .5-.2 1-.5 1.4l-2.8 2.8c-.4.4-.9.6-1.4.6H9L5 21V3l4 4h5.8c.5 0 1 .2 1.4.6l2.8 2.8c.4.4.5.9.5 1.4zM16 12l-2.5-2.5L12 12l1.5 1.5L16 12zM19 12l-2.5-2.5L14 12l1.5 1.5L19 12zM21 12l-2.5-2.5L16 12l1.5 1.5L21 12z"/>
+                <path d="M18.8 12c0 1.4-.6 2.7-1.7 3.7l1.4 1.4c1.5-1.5 2.3-3.5 2.3-5.1 0-1.6-.8-3.6-2.3-5.1l-1.4 1.4c1.1 1 1.7 2.3 1.7 3.7zM15.5 12c0 .8-.3 1.5-.8 2l1.4 1.4c.9-.9 1.4-2.1 1.4-3.4 0-1.3-.5-2.5-1.4-3.4l-1.4 1.4c.5.5.8 1.2.8 2z"/>
+                <path d="M16.5 12c0 .8-.3 1.5-.8 2l1.4 1.4c.9-.9 1.4-2.1 1.4-3.4 0-1.3-.5-2.5-1.4-3.4l-1.4 1.4c.5.5.8 1.2.8 2zM19.8 12c0 1.4-.6 2.7-1.7 3.7l1.4 1.4c1.5-1.5 2.3-3.5 2.3-5.1 0-1.6-.8-3.6-2.3-5.1l-1.4 1.4c1.1 1 1.7 2.3 1.7 3.7z"/>
+                <path d="M19.5 12c0 .5-.2 1-.5 1.4l-2.8 2.8c-.4.4-.9.6-1.4.6H9L5 21V3l4 4h5.8c.5 0 1 .2 1.4.6l2.8 2.8c.4.4.5.9.5 1.4zM16 12l-2.5-2.5L12 12l1.5 1.5L16 12zM19 12l-2.5-2.5L14 12l1.5 1.5L19 12zM21 12l-2.5-2.5L16 12l1.5 1.5L21 12z"/>
+            </svg>
+
+            <!-- Volume Low Icon -->
+            <svg id="volume-low-icon" class="w-5 h-5 text-gray-400 hidden" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+
+            <!-- Volume High Icon -->
+            <svg id="volume-high-icon" class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-purple-500">
+        </div>
+
+        <!-- Song List -->
+        <div class="mb-4">
+            <h3 class="text-lg font-semibold mb-3 text-purple-300">Playlist</h3>
+            <ul id="playlist" class="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
+                <!-- Songs will be injected here by JavaScript -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Link to your main JavaScript file -->
+    <script src="app.js"></script>
+</body>
+</html>

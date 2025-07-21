@@ -1,0 +1,64 @@
+/* style.css */
+
+/* Custom scrollbar for playlist */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #374151; /* gray-700 */
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #8B5CF6; /* purple-500 */
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #7C3AED; /* purple-600 */
+}
+
+/* Ensure body takes full height and uses Inter font */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Basic styling for the song list items */
+#playlist li {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#playlist li:hover {
+    background-color: #4B5563; /* gray-600 */
+}
+
+#playlist li.active {
+    background-color: #6D28D9; /* purple-700 */
+    color: white;
+    font-weight: 600;
+}
+
+#playlist li .song-number {
+    margin-right: 0.5rem;
+    color: #9CA3AF; /* gray-400 */
+}
+
+#playlist li.active .song-number {
+    color: #DDAAFF; /* Lighter purple for active number */
+}
+
+/* General button styling */
+button {
+    transition: transform 0.1s ease-in-out;
+}
+
+button:active {
+    transform: scale(0.95);
+}
